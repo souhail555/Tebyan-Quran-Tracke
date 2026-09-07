@@ -7,4 +7,4 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 .app-shell{position:relative;z-index:1}
 .student-avatar{background:#f8e6ef;color:#aa4770}
 .surah-select{display:grid;gap:6px;margin:14px 0;font-size:10px;color:#66847a}.surah-select select{border:1px solid #dfeae4;border-radius:6px;padding:9px 11px;color:var(--ink);outline-color:var(--green);background:#fff;font-size:11px}
-.welcome-banner{background-image:linear-gradient(100deg,#e5f5edee,#fbfaf2f2 67%),url('./assets/tebyan-logo.jpeg');background-position:center,left center;background-size:cover,190px auto;background-repeat:no-repeat}
+.welcome-banner{background-image:linear-gradient(100deg,#e5f5edcc,#fbfaf2d9 67%),url('./assets/tebyan-logo.jpeg');background-position:center,left center;background-size:cover,260px auto;background-repeat:no-repeat}
