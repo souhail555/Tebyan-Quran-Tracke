@@ -41,6 +41,12 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:
+      # Ensure GitHub Pages is provisioned before deploying. The very first
+      # deploy-pages run can fail with a 404 "Not Found" while the Pages site
+      # is still being created for the repository, so retry the deployment.
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+        with:
+          error_count: 30
+          reporting_interval: 10000
