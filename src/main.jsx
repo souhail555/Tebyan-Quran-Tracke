@@ -39,7 +39,10 @@ function App() {
   useEffect(() => localStorage.setItem('tebyan-students', JSON.stringify(students)), [students]);
   useEffect(() => localStorage.setItem('tebyan-activities', JSON.stringify(activities)), [activities]);
   useEffect(() => {
-    if ('serviceWorker' in navigator) navigator.serviceWorker.register(`${appBaseUrl}sw.js`).catch(() => {});
+    if ('serviceWorker' in navigator) {
+      const serviceWorkerUrl = import.meta.env.DEV ? '/sw.js' : `${appBaseUrl}sw.js`;
+      navigator.serviceWorker.register(serviceWorkerUrl).catch(() => {});
+    }
   }, []);
   useEffect(() => {
     const timer = window.setInterval(() => setToday(new Date()), 60000);
@@ -93,7 +96,7 @@ function App() {
 }
 
 function Dashboard({ students, present, average, activities, onAdd, onAttendance, onNavigate }) {
-  return <div className="page-body"><section className="welcome-banner"><div><span className="tag"><Sparkles size={14} /> يوم مبارك مليء بالإنجاز</span><h2>مرحبًا بك في نظام متابعة الطالبات</h2><p>متابعة حفظ وتلاوة الطالبات في جزء عم بكل سهولة ووضوح.</p></div><div className="ayah">﴿وَقُلْ رَبِّ زِدْنِي عِلْمًا﴾<small>برنامج متابعة جزء عم</small></div></section>
+  return <div className="page-body dashboard-page"><img className="dashboard-watermark" src={`${appBaseUrl}assets/tebyan-logo.jpeg`} alt="" aria-hidden="true" /><section className="welcome-banner"><div><span className="tag"><Sparkles size={14} /> يوم مبارك مليء بالإنجاز</span><h2>مرحبًا بك في نظام متابعة الطالبات</h2><p>متابعة حفظ وتلاوة الطالبات في جزء عم بكل سهولة ووضوح.</p></div><div className="ayah">﴿وَقُلْ رَبِّ زِدْنِي عِلْمًا﴾<small>برنامج متابعة جزء عم</small></div></section>
     <div className="quick-actions"><button onClick={onAdd}><Plus size={17} /> إضافة طالبة جديدة</button><button onClick={onAttendance}><CalendarCheck size={17} /> تسجيل حضور اليوم</button></div>
     <section className="stats-grid"><StatCard icon={Users} label="إجمالي الطالبات" value={students.length || 0} suffix="طالبة مسجلة" color="green" /><StatCard icon={CalendarCheck} label="الحاضرات اليوم" value={present} suffix={`من أصل ${students.length}`} color="mint" /><StatCard icon={BookOpen} label="نسبة الحفظ العامة" value={`${average}%`} suffix="متوسط التقدم" color="rose" progress={average} /><StatCard icon={ClipboardList} label="الاختبارات القادمة" value="5" suffix="هذا الشهر" color="yellow" /></section>
     <div className="content-grid"><section className="panel activity-panel"><PanelHeader title="آخر النشاطات" action="عرض الكل" /><div className="activity-list">{activities.slice(0, 4).map((activity, index) => <div className="activity" key={`${activity.title}-${index}`}><div className={`activity-icon ${activity.color}`}>{activity.icon === 'check' ? <Check size={17} /> : activity.icon === 'book' ? <BookOpen size={17} /> : activity.icon === 'star' ? '★' : activity.icon === 'user' ? <UserRound size={17} /> : '!'}</div><div><b>{activity.title}</b><p>{activity.text}</p></div><time>{activity.time}</time></div>)}</div></section><section className="panel progress-panel"><PanelHeader title="تقدم الطالبات في الحفظ" action="عرض التفاصيل" /><div className="progress-overview"><div className="donut" style={{ '--value': `${average}%` }}><strong>{average}%</strong><small>متوسط الإنجاز</small></div><div className="legend"><Legend color="green" text="ممتاز" value="18" /><Legend color="lime" text="جيدة جدًا" value="14" /><Legend color="yellow" text="جيد" value="10" /><Legend color="orange" text="مقبول" value="6" /><Legend color="rose" text="تحتاج دعم" value="4" /></div></div></section></div>
