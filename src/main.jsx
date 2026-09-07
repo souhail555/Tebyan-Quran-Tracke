@@ -7,6 +7,8 @@ import {
 } from 'lucide-react';
 import './styles.css';
 
+const appBaseUrl = import.meta.env.BASE_URL;
+
 const navItems = [
   ['dashboard', 'لوحة التحكم', LayoutDashboard], ['students', 'الطالبات', Users], ['lessons', 'الحفظ والتلاوة', BookOpen],
   ['attendance', 'الحضور والغياب', CalendarCheck], ['exams', 'الاختبارات', ClipboardList], ['reports', 'التقارير', BarChart3],
@@ -37,7 +39,7 @@ function App() {
   useEffect(() => localStorage.setItem('tebyan-students', JSON.stringify(students)), [students]);
   useEffect(() => localStorage.setItem('tebyan-activities', JSON.stringify(activities)), [activities]);
   useEffect(() => {
-    if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js').catch(() => {});
+    if ('serviceWorker' in navigator) navigator.serviceWorker.register(`${appBaseUrl}sw.js`).catch(() => {});
   }, []);
   useEffect(() => {
     const timer = window.setInterval(() => setToday(new Date()), 60000);
@@ -66,7 +68,7 @@ function App() {
 
   return <div className="app-shell">
     <aside className="sidebar">
-      <div className="brand-mini"><img src="/assets/tebyan-logo.jpeg" alt="شعار مؤسسة تبيان" /><div><strong>تبيان</strong><span>للقراءات والدراسات القرآنية</span></div></div>
+      <div className="brand-mini"><img src={`${appBaseUrl}assets/tebyan-logo.jpeg`} alt="شعار مؤسسة تبيان" /><div><strong>تبيان</strong><span>للقراءات والدراسات القرآنية</span></div></div>
       <div className="profile"><div className="avatar teacher-avatar">ب</div><div><b>أهلًا وسهلًا</b><strong>بشرى اليعقوبي</strong><small>مديرة المؤسسة</small></div><Bell size={18} /></div>
       <nav>{navItems.map(([id, label, Icon]) => <button key={id} className={activePage === id ? 'nav-item active' : 'nav-item'} onClick={() => setActivePage(id)}><Icon size={20} /><span>{label}</span>{id === 'students' && <em>{students.length}</em>}</button>)}</nav>
       <div className="sidebar-footer"><div className="quran-mark">۞</div><p>متابعة طالبات جزء عم</p><small>مؤسسة تبيان القرآنية</small></div>
