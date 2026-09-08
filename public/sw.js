@@ -1,4 +1,4 @@
-const CACHE_NAME = 'tebyan-quran-tracker-v2';
+const CACHE_NAME = 'tebyan-quran-tracker-v3';
 const BASE_PATH = new URL('./', self.registration.scope).pathname;
 const APP_SHELL = [BASE_PATH, `${BASE_PATH}index.html`, `${BASE_PATH}assets/tebyan-logo.jpeg`];
 

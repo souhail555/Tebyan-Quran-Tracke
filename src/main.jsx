@@ -40,7 +40,7 @@ function App() {
   useEffect(() => localStorage.setItem('tebyan-activities', JSON.stringify(activities)), [activities]);
   useEffect(() => {
     if ('serviceWorker' in navigator) {
-      const serviceWorkerUrl = import.meta.env.DEV ? '/sw.js' : `${appBaseUrl}sw.js`;
+      const serviceWorkerUrl = import.meta.env.DEV ? '/sw.js' : `${appBaseUrl}sw.js?v=3`;
       navigator.serviceWorker.register(serviceWorkerUrl).catch(() => {});
     }
   }, []);
